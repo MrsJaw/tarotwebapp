@@ -1,0 +1,26 @@
+﻿@page "/"
+
+<div class="tarot-header p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">Welcome</h1>
+    <h6 class="sub-header">What kind of reading would you like?</h6>
+    <div class="container">
+        @foreach (var reading in _readingOfferings)
+        {
+            <div class="row mb-3 justify-content-center">
+                <button type="button" class="btn btn-outline-light me-2">@reading</button>
+            </div>
+        }
+    </div>
+</div>
+
+@code{ 
+    private List<string> _readingOfferings = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        _readingOfferings.Add("Single Card");
+        _readingOfferings.Add("Waxing Crescent");
+        _readingOfferings.Add("Mind, Body, Spirit");
+    }
+}

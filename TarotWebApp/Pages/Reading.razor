@@ -1,0 +1,28 @@
+﻿@page  "/reading/{ReadingType}"
+
+<div class="text-center">
+    <h1 class="display-4 fw-normal">@ReadingType</h1>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 text-center">
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="col-4 px-2">
+                    <Card CardName="@i.ToString()"></Card>
+                </div>
+            }
+        </div>
+    </div>
+    <p>
+        <a href="#" class="btn  btn-outline-light p-2 m-2">Home</a>
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public string ReadingType { get; set; } //todo: on set, set a pretty version of the name as the title. 
+    //todo: scrolling.
+    //todo: arrange in mat correctly
+    //todo: get list of cards on initialize
+    //todo: wire up to api
+
+}
