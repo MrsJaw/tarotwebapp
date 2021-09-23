@@ -1,21 +1,22 @@
 ﻿<div class="card text-center bg-dark">
-    <div class="card-header justify-contents-center">
-        <h6>What question does this card answer?</h6>
-        <h1>@CardName</h1>
+    <div class="card-header justify-contents-center py-1">
+        <h6>@Model.Role</h6>
+        <h3 class="@(Model.IsReversed ? "reversed-title" : "")">
+            @($"{Model.Card.Name}{(Model.IsReversed ? " Reversed" : string.Empty)}")
+        </h3>
     </div>
-    <div class="card-body justify-contents-center">
-            <img src="https://upload.wikimedia.org/wikipedia/en/d/d2/RWS_Tarot_03_Empress.jpg"
-                 class="img-thumbnail"
-                 width=250
-                 alt="...">
+    <div class="card-body justify-contents-center py-1">
+        <img src="@Model.Card.ImgSrc"
+             class="img-thumbnail @(Model.IsReversed ? "reversed-card" : "")"
+             width=250>
     </div>
-    <div class="card-footer justify-contents-center">
-        <h3>Key Words</h3>
-        <h6>Words, Words, Words</h6>
+    <div class="card-footer justify-contents-center py-1">
+        <h5>Key Words</h5>
+        <h6>@(Model.IsReversed ? Model.Card.ReverseMeanings : Model.Card.Meanings)</h6>
     </div>
 </div>
 
 @code {
     [Parameter]
-    public string CardName { get; set; }
+    public DrawViewModel Model { get; set; }
 }

@@ -1,14 +1,18 @@
 ﻿@page  "/reading/{ReadingType}"
+@inject HttpClient _client
 
 <div class="text-center">
-    <h1 class="display-4 fw-normal">@ReadingType</h1>
+    <h2 class="display-4 fw-normal">@ReadingType.ToTitle()</h2>
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 text-center">
-            @for (int i = 0; i < 3; i++)
+            @if (_model != null)
             {
-                <div class="col-4 px-2">
-                    <Card CardName="@i.ToString()"></Card>
-                </div>
+                @foreach (var draw in _model.Draws)
+                {
+                    <div class="col-4 p-2">
+                        <Card Model="@draw"></Card>
+                    </div>
+                }
             }
         </div>
     </div>
@@ -18,11 +22,14 @@
 </div>
 
 @code {
+    private ReadingViewModel _model;
+
     [Parameter]
-    public string ReadingType { get; set; } //todo: on set, set a pretty version of the name as the title. 
-    //todo: scrolling.
-    //todo: arrange in mat correctly
-    //todo: get list of cards on initialize
-    //todo: wire up to api
+    public string ReadingType { get; set; }
+
+    protected override async Task OnParametersSetAsync() => await GetTarotReading();
+
+    private async Task GetTarotReading() =>
+        _model = await _client.GetFromJsonAsync<ReadingViewModel>(Constants.ReadEndpoint.Replace("readingType", ReadingType), Constants.DefaultJsonSerializerOptions);
 
 }

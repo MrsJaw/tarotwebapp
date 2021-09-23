@@ -1,26 +1,35 @@
 ﻿@page "/"
+@inject HttpClient _client
+@inject NavigationManager _navigation
 
 <div class="tarot-header p-3 pb-md-4 mx-auto text-center">
-    <h1 class="display-4 fw-normal">Welcome</h1>
+    <h1 class="display-4 fw-normal">☆*.✧Welcome✧.*ﾟ⁎</h1>
     <h6 class="sub-header">What kind of reading would you like?</h6>
-    <div class="container">
+    <div class="container py-3">
         @foreach (var reading in _readingOfferings)
         {
             <div class="row mb-3 justify-content-center">
-                <button type="button" class="btn btn-outline-light me-2">@reading</button>
+                <button type="button"
+                        class="btn btn-outline-light me-2"
+                        @onclick="@(e => OnReadingClicked(@reading))">
+                    @reading.ToTitle()
+                </button>
             </div>
         }
     </div>
 </div>
 
-@code{ 
+@code{
     private List<string> _readingOfferings = new List<string>();
 
-    protected override async Task OnInitializedAsync()
-    {
+    protected override async Task OnInitializedAsync() => await GetTarotReadingOfferings();
 
-        _readingOfferings.Add("Single Card");
-        _readingOfferings.Add("Waxing Crescent");
-        _readingOfferings.Add("Mind, Body, Spirit");
+    private async Task GetTarotReadingOfferings() =>
+        _readingOfferings = (await _client.GetFromJsonAsync<string[]>(Constants.GetReadingTypesEndpoint)).ToList();
+
+    private void OnReadingClicked(string readingType)
+    {
+        _navigation.NavigateTo($"/reading/{readingType}");
     }
+
 }

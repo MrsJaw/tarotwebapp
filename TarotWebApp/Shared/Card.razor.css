@@ -1,0 +1,7 @@
+﻿.reversed-card {
+    transform: rotate(180deg);
+}
+
+.reversed-title {
+    color: #A12568 !important;
+}
