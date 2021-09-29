@@ -1,18 +1,19 @@
 ﻿<div class="card text-center bg-dark">
     <div class="card-header justify-contents-center py-1">
-        <h6>@Model.Role</h6>
-        <h3 class="@(Model.IsReversed ? "reversed-title" : "")">
+        <h6 id="role">@Model.Role</h6>
+        <h3 id="card-name" class="@(Model.IsReversed ? "reversed-title" : "")">
             @($"{Model.Card.Name}{(Model.IsReversed ? " Reversed" : string.Empty)}")
         </h3>
     </div>
     <div class="card-body justify-contents-center py-1">
-        <img src="@Model.Card.ImgSrc"
+        <img id="card-img"
+             src="@Model.Card.ImgSrc"
              class="img-thumbnail @(Model.IsReversed ? "reversed-card" : "")"
              width=250>
     </div>
     <div class="card-footer justify-contents-center py-1">
         <h5>Key Words</h5>
-        <h6>@(Model.IsReversed ? Model.Card.ReverseMeanings : Model.Card.Meanings)</h6>
+        <h6 id="meanings">@(Model.IsReversed ? Model.Card.ReverseMeanings : Model.Card.Meanings)</h6>
     </div>
 </div>
 
